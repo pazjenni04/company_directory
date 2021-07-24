@@ -63,17 +63,23 @@ function generateTask() {
 }
 
 //create view all employees function
+function viewEmployees() {
+  db.query("SELECT * FROM employee", function (err, results) {
+    console.log(results);
+  });
+}
 
 //create add employee function
-
+addEmployee();
 //update employee role function
-
+updateEmployeeRole();
 //view all roles function
-
+allRoles();
 //add role funtion
-
+addRole();
 //view all departments function
-
+allDepartments();
 //add department function
-
+addDepartment();
 //quit function
+quit();

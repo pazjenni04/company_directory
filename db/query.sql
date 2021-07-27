@@ -1,0 +1,3 @@
+-- SELECT employee_role.id, employee_role.title, employee.first_name, employee.last_name, employee.id
+-- FROM employee_role
+-- INNER JOIN employee ON employee.id=employee_role.id;

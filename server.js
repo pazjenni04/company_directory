@@ -22,6 +22,33 @@ const db = mysql.createConnection(
   console.log(`Connected to the employee_db database.`)
 );
 
+//create view all employees function
+function viewEmployees() {
+  app.get("/api/employee", (req, res) => {
+    db.query("SELECT * FROM employee", function (err, results) {
+      console.log(results);
+    });
+  });
+}
+
+//view all roles function
+function allRoles() {
+  app.get("/api/roles", (req, res) => {
+    db.query("SELECT * FROM employee_roles", function (err, results) {
+      console.log(results);
+    });
+  });
+}
+
+//view all departments function
+function allDepartments() {
+  app.get("/api/department", (req, res) => {
+    db.query("SELECT * FROM department", function (err, results) {
+      console.log(results);
+    });
+  });
+}
+
 // turn on connection to db and server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

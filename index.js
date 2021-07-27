@@ -11,17 +11,17 @@ function generateTask() {
     .prompt([
       {
         name: "mainmenu",
-        type: list,
+        type: "list",
         message: "What would you like to do?",
         choices: [
           "View Employees",
-          "Add Employee",
-          "Update Employee Role",
+          // "Add Employee",
+          // "Update Employee Role",
           "View All Roles",
-          "Add Role",
+          // "Add Role",
           "View All Departments",
-          "Add Department",
-          "Quit",
+          // "Add Department",
+          // "Quit",
         ],
       },
     ])
@@ -31,36 +31,38 @@ function generateTask() {
           viewEmployees();
           break;
 
-        case "Add Employee":
-          addEmployee();
-          break;
+        // case "Add Employee":
+        //   addEmployee();
+        //   break;
 
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break;
+        // case "Update Employee Role":
+        //   updateEmployeeRole();
+        //   break;
 
         case "View All Roles":
           allRoles();
           break;
 
-        case "Add Role":
-          addRole();
-          break;
+        // case "Add Role":
+        //   addRole();
+        //   break;
 
         case "View All Departments":
           allDepartments();
           break;
 
-        case "Add Department":
-          addDepartment();
-          break;
+        // case "Add Department":
+        //   addDepartment();
+        //   break;
 
-        case "Quit":
-          quit();
-          break;
+        //   case "Quit":
+        //     quit();
+        //     break;
       }
     });
 }
+
+generateTask();
 
 //create view all employees function
 function viewEmployees() {
@@ -70,16 +72,44 @@ function viewEmployees() {
 }
 
 //create add employee function
-addEmployee();
+// function addEmployee() {
+//   db.query("INSERT INTO employee", function (err, results) {
+//     console.log(results);
+//   });
+// };
+
 //update employee role function
-updateEmployeeRole();
+// function updateEmployeeRole() {
+// db.query("INSERT INTO employee", function (err, results) {
+//   console.log(results);
+// });
+// };
+
 //view all roles function
-allRoles();
+function allRoles() {
+  db.query("SELECT * FROM employee_roles", function (err, results) {
+    console.log(results);
+  });
+}
+
 //add role funtion
-addRole();
+// function addRole() {
+
+// };
+
 //view all departments function
-allDepartments();
+function allDepartments() {
+  db.query("SELECT * FROM department", function (err, results) {
+    console.log(results);
+  });
+}
+
 //add department function
-addDepartment();
+// function addDepartment() {
+
+// }
+
 //quit function
-quit();
+// function quit() {
+
+// }

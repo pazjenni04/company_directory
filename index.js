@@ -15,7 +15,7 @@ function generateTask() {
         message: "What would you like to do?",
         choices: [
           "View Employees",
-          // "Add Employee",
+          "Add Employee",
           // "Update Employee Role",
           "View All Roles",
           // "Add Role",
@@ -31,9 +31,9 @@ function generateTask() {
           viewEmployees();
           break;
 
-        // case "Add Employee":
-        //   addEmployee();
-        //   break;
+        case "Add Employee":
+          addedEmployeeInfo();
+          break;
 
         // case "Update Employee Role":
         //   updateEmployeeRole();
@@ -64,19 +64,32 @@ function generateTask() {
 
 generateTask();
 
-//create view all employees function
-function viewEmployees() {
-  db.query("SELECT * FROM employee", function (err, results) {
-    console.log(results);
-  });
+//run prompts if choose add employee
+function addedEmployeeInfo(employee) {
+  inquirer.prompt([
+    {
+      name: "employeeID",
+      type: "input",
+      message: "What is the employee's ID?",
+    },
+    {
+      name: "employeeFirst",
+      type: "input",
+      message: "What is the employee's first name?",
+    },
+    {
+      name: "employeeLast",
+      type: "input",
+      message: "What is the employee's last name?",
+    },
+    {
+      name: "employeeRoleId",
+      type: "list",
+      message: "What is the employee's role ID?",
+      choices: ["4000", "4001", "5000", "5001", "6000", "6001", "7000", "7001"],
+    },
+  ]);
 }
-
-//create add employee function
-// function addEmployee() {
-//   db.query("INSERT INTO employee", function (err, results) {
-//     console.log(results);
-//   });
-// };
 
 //update employee role function
 // function updateEmployeeRole() {
@@ -85,24 +98,10 @@ function viewEmployees() {
 // });
 // };
 
-//view all roles function
-function allRoles() {
-  db.query("SELECT * FROM employee_roles", function (err, results) {
-    console.log(results);
-  });
-}
-
 //add role funtion
 // function addRole() {
 
 // };
-
-//view all departments function
-function allDepartments() {
-  db.query("SELECT * FROM department", function (err, results) {
-    console.log(results);
-  });
-}
 
 //add department function
 // function addDepartment() {

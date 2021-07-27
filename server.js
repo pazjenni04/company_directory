@@ -31,6 +31,16 @@ function viewEmployees() {
   });
 }
 
+//create add employee function
+function addEmployee() {
+  db.query(
+    "INSERT INTO employee (id, first_name, last_name, role_id, manager_id VALUES `${employee.employeeID}, ${employee.employeeFirst}, ${employee.employeeLast}, ${employee.employeeRoleId};`",
+    function (err, results) {
+      console.log(results);
+    }
+  );
+}
+
 //view all roles function
 function allRoles() {
   app.get("/api/roles", (req, res) => {
@@ -53,3 +63,5 @@ function allDepartments() {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = addEmployee();

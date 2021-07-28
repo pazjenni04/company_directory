@@ -1,9 +1,20 @@
+require("dotenv").config();
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
 const consoletable = require("console.table");
-const fs = require("fs");
-const { listenerCount } = require("events");
-const Choices = require("inquirer/lib/objects/choices");
+
+// Connect to database
+const db = mysql.createConnection(
+  {
+    host: "localhost",
+    // MySQL username,
+    user: "root",
+    // MySQL password
+    password: process.env.DB_PASSWORD,
+    database: "employee_db",
+  },
+  console.log(`Connected to the employee_db database.`)
+);
 
 //inquirer prompts that will determine which function to execute
 function generateTask() {
@@ -21,7 +32,7 @@ function generateTask() {
           // "Add Role",
           "View All Departments",
           // "Add Department",
-          // "Quit",
+          "Quit",
         ],
       },
     ])
@@ -55,40 +66,87 @@ function generateTask() {
         //   addDepartment();
         //   break;
 
-        //   case "Quit":
-        //     quit();
-        //     break;
+        case "Quit":
+          quit();
+          break;
       }
     });
 }
 
 generateTask();
 
+function viewEmployees() {
+  db.query("SELECT * FROM employee", function (err, results) {
+    console.table(results);
+  });
+  generateTask();
+}
+
 //run prompts if choose add employee
 function addedEmployeeInfo(employee) {
-  inquirer.prompt([
-    {
-      name: "employeeID",
-      type: "input",
-      message: "What is the employee's ID?",
-    },
-    {
-      name: "employeeFirst",
-      type: "input",
-      message: "What is the employee's first name?",
-    },
-    {
-      name: "employeeLast",
-      type: "input",
-      message: "What is the employee's last name?",
-    },
-    {
-      name: "employeeRoleId",
-      type: "list",
-      message: "What is the employee's role ID?",
-      choices: ["4000", "4001", "5000", "5001", "6000", "6001", "7000", "7001"],
-    },
-  ]);
+  db.query("SELECT id, title FROM employee_role", (err, results) => {
+    console.table(results);
+
+    inquirer
+      .prompt([
+        {
+          name: "employeeRoleId",
+          type: "input",
+          message: "What is the employee's role ID? (see above table)",
+        },
+        {
+          name: "employeeID",
+          type: "input",
+          message: "What is the employee's ID?",
+        },
+        {
+          name: "employeeFirst",
+          type: "input",
+          message: "What is the employee's first name?",
+        },
+        {
+          name: "employeeLast",
+          type: "input",
+          message: "What is the employee's last name?",
+        },
+        {
+          name: "employeeManager",
+          type: "list",
+          message: "Who is the employee's manager?",
+          choices: [
+            "Dwight Shrute",
+            "Kelly Kapoor",
+            "Angela Martin",
+            "David Wallace",
+          ],
+        },
+      ])
+      .then((employeeResponse) => {
+        db.query(
+          "INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES(`${employeeResponse.employeeID}`, `${employeeResponse.employeeFirst}`, `${employeeResponse.employeeLast}`, `${employeeResponse.employeeRoleId}`, `${employeeResponse.employeeManager}`",
+          function (err, results) {
+            console.table(employeeResponse);
+          }
+        );
+        generateTask();
+      });
+  });
+}
+
+//view all roles function
+function allRoles() {
+  db.query("SELECT * FROM employee_role", function (err, results) {
+    console.table(results);
+  });
+  generateTask();
+}
+
+//view all departments function
+function allDepartments() {
+  db.query("SELECT * FROM department", function (err, results) {
+    console.table(results);
+  });
+  generateTask();
 }
 
 //update employee role function
@@ -108,7 +166,9 @@ function addedEmployeeInfo(employee) {
 
 // }
 
-//quit function
-// function quit() {
-
-// }
+// quit function
+function quit() {
+  db.query("quit", function (err, results) {
+    console.log("Goodbye");
+  });
+}

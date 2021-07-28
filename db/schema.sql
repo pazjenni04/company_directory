@@ -8,6 +8,7 @@ CREATE TABLE department (
   department_name VARCHAR(30)
 );
 
+-- add an auto increment and look for default to start at certain value
 CREATE TABLE employee_role (
   id INT NOT NULL PRIMARY KEY,
   title VARCHAR(30),
@@ -18,6 +19,7 @@ CREATE TABLE employee_role (
   ON DELETE SET NULL
 );
 
+-- add an auto increment and look for default to start at certain value
 CREATE TABLE employee (
   id INT NOT NULL PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,

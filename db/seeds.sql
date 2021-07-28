@@ -32,6 +32,3 @@ VALUES (123, "Dwight", "Schrute", 4000, 123),
        (134, "Stanley", "Hudson", 4001, 123),
        (135, "Pam", "Beasley", 4001, 123);
 
--- SELECT employee_role.id, employee_role.title, employee.first_name, employee.last_name, employee.id
--- FROM employee_role
--- INNER JOIN employee ON employee.id=employee_role.id;

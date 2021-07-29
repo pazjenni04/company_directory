@@ -27,11 +27,12 @@ function generateTask() {
         choices: [
           "View Employees",
           "Add Employee",
-          // "Update Employee Role",
+          "Update Employee Role",
           "View All Roles",
-          // "Add Role",
+          "Add Role",
           "View All Departments",
-          // "Add Department",
+          "Add Department",
+          "Delete Department",
           "Quit",
         ],
       },
@@ -46,25 +47,29 @@ function generateTask() {
           addedEmployeeInfo();
           break;
 
-        // case "Update Employee Role":
-        //   updateEmployeeRole();
-        //   break;
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
 
         case "View All Roles":
           allRoles();
           break;
 
-        // case "Add Role":
-        //   addRole();
-        //   break;
+        case "Add Role":
+          addRole();
+          break;
 
         case "View All Departments":
           allDepartments();
           break;
 
-        // case "Add Department":
-        //   addDepartment();
-        //   break;
+        case "Add Department":
+          addDepartment();
+          break;
+
+        case "Add Department":
+          deleteDepartment();
+          break;
 
         case "Quit":
           quit();
@@ -78,8 +83,8 @@ generateTask();
 function viewEmployees() {
   db.query("SELECT * FROM employee", function (err, results) {
     console.table(results);
+    generateTask();
   });
-  generateTask();
 }
 
 //run prompts if choose add employee
@@ -93,11 +98,6 @@ function addedEmployeeInfo(employee) {
           name: "employeeRoleId",
           type: "input",
           message: "What is the employee's role ID? (see above table)",
-        },
-        {
-          name: "employeeID",
-          type: "input",
-          message: "What is the employee's ID?",
         },
         {
           name: "employeeFirst",
@@ -114,18 +114,31 @@ function addedEmployeeInfo(employee) {
           type: "list",
           message: "Who is the employee's manager?",
           choices: [
-            "Dwight Shrute",
-            "Kelly Kapoor",
-            "Angela Martin",
-            "David Wallace",
+            {
+              name: "Dwight Shrute",
+              value: 100,
+            },
+            {
+              name: "Kelly Kapoor",
+              value: 102,
+            },
+            {
+              name: "Angela Martin",
+              value: 104,
+            },
+            {
+              name: "David Wallace",
+              value: 109,
+            },
           ],
         },
       ])
       .then((employeeResponse) => {
         db.query(
-          "INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES(`${employeeResponse.employeeID}`, `${employeeResponse.employeeFirst}`, `${employeeResponse.employeeLast}`, `${employeeResponse.employeeRoleId}`, `${employeeResponse.employeeManager}`",
+          `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${employeeResponse.employeeFirst}", "${employeeResponse.employeeLast}", ${employeeResponse.employeeRoleId}, ${employeeResponse.employeeManager});`,
           function (err, results) {
-            console.table(employeeResponse);
+            console.table(results);
+            console.log(err);
           }
         );
         generateTask();
@@ -137,38 +150,200 @@ function addedEmployeeInfo(employee) {
 function allRoles() {
   db.query("SELECT * FROM employee_role", function (err, results) {
     console.table(results);
+    generateTask();
   });
-  generateTask();
 }
 
 //view all departments function
 function allDepartments() {
   db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
+    generateTask();
   });
-  generateTask();
 }
 
 //update employee role function
-// function updateEmployeeRole() {
-// db.query("INSERT INTO employee", function (err, results) {
-//   console.log(results);
-// });
-// };
+function updateEmployeeRole() {
+  db.query("SELECT * FROM employee", function (err, results) {
+    console.table(results);
+    let employeesChoices = results.map((employee) => {
+      return {
+        name: employee.first_name,
+        value: employee.id,
+      };
+    });
+
+    inquirer
+      .prompt([
+        {
+          name: "updateEmployee",
+          type: "list",
+          choices: employeesChoices,
+        },
+        {
+          name: "newRole",
+          type: "list",
+          message: "Please select a new role for the employee.",
+          choices: [
+            {
+              name: "Sales Lead",
+              value: 1000,
+            },
+            {
+              name: "Salesperson",
+              value: 1001,
+            },
+            {
+              name: "Lead Engineer",
+              value: 1002,
+            },
+            {
+              name: "Software Engineer",
+              value: 1003,
+            },
+            {
+              name: "Account Manager",
+              value: 1004,
+            },
+            {
+              name: "Accountant",
+              value: 1005,
+            },
+            {
+              name: "Legal Team Lead",
+              value: 1006,
+            },
+            {
+              name: "Lawyer",
+              value: 1007,
+            },
+          ],
+        },
+      ])
+      .then((updateResponse) => {
+        db.query(
+          `UPDATE employee SET role_id = ${updateResponse.newRole} WHERE id = ${updateResponse.updateEmployee};`
+        );
+        console.table(results);
+        generateTask();
+      });
+  });
+}
 
 //add role funtion
-// function addRole() {
+function addRole() {
+  db.query("SELECT * FROM employee_role;", function (err, results) {
+    console.table(results);
 
-// };
+    inquirer
+      .prompt([
+        {
+          name: "titleRole",
+          type: "input",
+          message: "What's the title of the new role?",
+        },
+        {
+          name: "salaryRole",
+          type: "input",
+          message: "What's the salary for this role?",
+        },
+        {
+          name: "departmentRole",
+          type: "list",
+          message: "What department does this role belong to?",
+          choices: [
+            {
+              name: "Engineering",
+              value: 1,
+            },
+            {
+              name: "Sales",
+              value: 2,
+            },
+            {
+              name: "Finance",
+              value: 3,
+            },
+            {
+              name: "Legal",
+              value: 4,
+            },
+          ],
+        },
+      ])
+      .then((addedRole) => {
+        db.query(
+          `INSERT INTO employee_role (title, salary, department_id) VALUES ("${addedRole.titleRole}", "${addedRole.salaryRole}", "${addedRole.departmentRole}");`,
+          function (err, results) {
+            console.table(results);
+            generateTask();
+          }
+        );
+      });
+  });
+}
 
 //add department function
-// function addDepartment() {
+function addDepartment() {
+  db.query("SELECT * from department", function (err, results) {
+    console.table(results);
 
-// }
+    inquirer
+      .prompt([
+        {
+          name: "newDepartment",
+          type: "input",
+          message: "What is the name of the new department?",
+        },
+      ])
+      .then((addDepartment) => {
+        db.query(
+          `INSERT INTO department (department_name) VALUES ("${addDepartment.newDepartment}");`,
+          function (err, results) {
+            console.table(results);
+            generateTask();
+          }
+        );
+      });
+  });
+}
+
+//deletes department
+function deleteDepartment() {
+  db.query("SELECT * FROM department;", function (err, results) {
+    console.log(err);
+    console.log(results);
+    console.table(results);
+    let departmentslist = results.map((departments) => {
+      return {
+        name: departments.department_name,
+        value: departments.id,
+      };
+    });
+
+    // inquirer
+    //   .prompt([
+    //     {
+    //       name: "editDepartment",
+    //       type: "list",
+    //       message: "Please select the department you would like to remove.",
+    //       choices: departmentslist,
+    //     },
+    //   ])
+    //   .then((removedDep) => {
+    //     db.query(
+    //       `DELETE FROM department WHERE id = ${removedDep.editDepartment}`,
+    //       function (err, results) {
+    //         console.table(results);
+    //         generateTask();
+    //       }
+    //     );
+    //   });
+  });
+}
 
 // quit function
 function quit() {
-  db.query("quit", function (err, results) {
-    console.log("Goodbye");
-  });
+  db.end();
+  console.log("Goodbye");
 }

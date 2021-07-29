@@ -32,7 +32,6 @@ function generateTask() {
           "Add Role",
           "View All Departments",
           "Add Department",
-          "Delete Department",
           "Quit",
         ],
       },
@@ -305,40 +304,6 @@ function addDepartment() {
           }
         );
       });
-  });
-}
-
-//deletes department
-function deleteDepartment() {
-  db.query("SELECT * FROM department;", function (err, results) {
-    console.log(err);
-    console.log(results);
-    console.table(results);
-    let departmentslist = results.map((departments) => {
-      return {
-        name: departments.department_name,
-        value: departments.id,
-      };
-    });
-
-    // inquirer
-    //   .prompt([
-    //     {
-    //       name: "editDepartment",
-    //       type: "list",
-    //       message: "Please select the department you would like to remove.",
-    //       choices: departmentslist,
-    //     },
-    //   ])
-    //   .then((removedDep) => {
-    //     db.query(
-    //       `DELETE FROM department WHERE id = ${removedDep.editDepartment}`,
-    //       function (err, results) {
-    //         console.table(results);
-    //         generateTask();
-    //       }
-    //     );
-    //   });
   });
 }
 

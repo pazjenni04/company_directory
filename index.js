@@ -264,8 +264,14 @@ function updateEmployeeRole() {
 
 //add role funtion
 function addRole() {
-  db.query("SELECT * FROM employee_role;", function (err, results) {
+  db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
+    let existingDepartments = results.map((departments) => {
+      return {
+        name: departments.department_name,
+        value: departments.id,
+      };
+    });
 
     inquirer
       .prompt([
@@ -297,24 +303,7 @@ function addRole() {
           name: "departmentRole",
           type: "list",
           message: "What department does this role belong to?",
-          choices: [
-            {
-              name: "Engineering",
-              value: 1,
-            },
-            {
-              name: "Sales",
-              value: 2,
-            },
-            {
-              name: "Finance",
-              value: 3,
-            },
-            {
-              name: "Legal",
-              value: 4,
-            },
-          ],
+          choices: existingDepartments,
         },
       ])
       .then((addedRole) => {

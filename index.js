@@ -30,8 +30,10 @@ function generateTask() {
           "Update Employee Role",
           "View All Roles",
           "Add Role",
+          "Delete Role",
           "View All Departments",
           "Add Department",
+          "Delete Department",
           "Quit",
         ],
       },
@@ -58,6 +60,10 @@ function generateTask() {
           addRole();
           break;
 
+        case "Delete Role":
+          deleteRole();
+          break;
+
         case "View All Departments":
           allDepartments();
           break;
@@ -66,7 +72,7 @@ function generateTask() {
           addDepartment();
           break;
 
-        case "Add Department":
+        case "Delete Department":
           deleteDepartment();
           break;
 
@@ -97,16 +103,37 @@ function addedEmployeeInfo(employee) {
           name: "employeeRoleId",
           type: "input",
           message: "What is the employee's role ID? (see above table)",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
         {
           name: "employeeFirst",
           type: "input",
           message: "What is the employee's first name?",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
         {
           name: "employeeLast",
           type: "input",
           message: "What is the employee's last name?",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
         {
           name: "employeeManager",
@@ -114,7 +141,7 @@ function addedEmployeeInfo(employee) {
           message: "Who is the employee's manager?",
           choices: [
             {
-              name: "Dwight Shrute",
+              name: "Dwight Schrute",
               value: 100,
             },
             {
@@ -240,11 +267,25 @@ function addRole() {
           name: "titleRole",
           type: "input",
           message: "What's the title of the new role?",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
         {
           name: "salaryRole",
           type: "input",
           message: "What's the salary for this role?",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
         {
           name: "departmentRole",
@@ -293,11 +334,82 @@ function addDepartment() {
           name: "newDepartment",
           type: "input",
           message: "What is the name of the new department?",
+          validate: (input) => {
+            if (input) {
+              return true;
+            } else {
+              return "Please insert a valid input.";
+            }
+          },
         },
       ])
       .then((addDepartment) => {
         db.query(
           `INSERT INTO department (department_name) VALUES ("${addDepartment.newDepartment}");`,
+          function (err, results) {
+            console.table(results);
+            generateTask();
+          }
+        );
+      });
+  });
+}
+
+//deletes department from list
+function deleteDepartment() {
+  db.query("SELECT * FROM department", function (err, results) {
+    console.table(results);
+    let departmentlist = results.map((departments) => {
+      return {
+        name: departments.department_name,
+        value: departments.id,
+      };
+    });
+
+    inquirer
+      .prompt([
+        {
+          name: "selectDepartment",
+          type: "list",
+          message: "Please select the department you would like to remove.",
+          choices: departmentlist,
+        },
+      ])
+      .then((deletedDepartment) => {
+        db.query(
+          `DELETE FROM department WHERE department.id = ${deletedDepartment.selectDepartment};`,
+          function (err, results) {
+            console.table(results);
+            generateTask();
+          }
+        );
+      });
+  });
+}
+
+//deletes role from the list
+function deleteRole() {
+  db.query("SELECT * FROM employee_role", function (err, results) {
+    console.table(results);
+    let rolelist = results.map((roles) => {
+      return {
+        name: roles.title,
+        value: roles.id,
+      };
+    });
+
+    inquirer
+      .prompt([
+        {
+          name: "selectRole",
+          type: "list",
+          message: "Please select the role you would like to remove.",
+          choices: rolelist,
+        },
+      ])
+      .then((deletedRole) => {
+        db.query(
+          `DELETE FROM department WHERE department.id = ${deletedRole.selectRole};`,
           function (err, results) {
             console.table(results);
             generateTask();

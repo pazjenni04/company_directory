@@ -90,6 +90,3 @@ WHERE first_name = "Creed";
 UPDATE employee
 SET manager_id = 109
 WHERE first_name = "Darryl";
-
-
-

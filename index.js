@@ -404,7 +404,7 @@ function deleteRole() {
       ])
       .then((deletedRole) => {
         db.query(
-          `DELETE FROM department WHERE department.id = ${deletedRole.selectRole};`,
+          `DELETE FROM employee_role WHERE employee_role.id = ${deletedRole.selectRole};`,
           function (err, results) {
             console.table(results);
             generateTask();

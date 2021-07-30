@@ -136,6 +136,8 @@ _Questions? Feel free to contact me._
 
 To see a demonstration of this application, feel free to watch the following link. https://youtu.be/wfy9AxJFvG4
 
+- Github repo - https://github.com/pazjenni04/company_directory.git
+
 # License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

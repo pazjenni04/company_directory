@@ -196,7 +196,7 @@ function allDepartments() {
 
 //update employee role function
 function updateEmployeeRole() {
-  db.query("SELECT * FROM employee", function (err, results) {
+  db.query("SELECT * FROM employee;", function (err, results) {
     console.table(results);
     let employeesChoices = results.map((employee) => {
       return {

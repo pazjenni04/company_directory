@@ -13,6 +13,11 @@ LEFT JOIN employee manager on manager.id = employee.manager_id;
 
 
 -- views current roles and its corresponding department
-SELECT employee_role.id, employee_role.title, department.department_name
+SELECT employee.id, employee.first_name, employee.last_name, employee_role.id, employee_role.title, department.department_name
 FROM employee_role
 LEFT JOIN department on employee_role.department_id = department.id
+
+-- shows the employees id, the first and last names, their rold id and the title
+SELECT employee.id, employee.first_name, employee.last_name, employee_role.id, employee_role.title
+FROM employee
+LEFT JOIN employee_role ON employee.role_id = employee_role.id;

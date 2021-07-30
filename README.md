@@ -33,7 +33,7 @@ Once the user presses enter, they will then be prompted with the main menu.
 
 ![The following is a screenshot of the main menu the user will be prompted when the application is commenced.](images\main-menu_img.PNG)
 
-### View Employees
+### **View Employees**
 
 From the main menu, the user can choose multiple options including 'View Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', or 'Quit' if they do not want to proceed.
 
@@ -43,61 +43,87 @@ If the user chooses 'View Employees', a table will be created detailing the curr
 
 The user is then requested to choose an other option from the main menu.
 
-### Add Employee
+### **Add Employee**
 
 On the main menu, the user can choose to add an employee to the current company directory by choosing 'Add Employee.'
 
-![The following image showcases the option to add an employee.](images\add-employee_img.PNG)
-
 Once the chooses 'Add Employee', a table of the current available roles will be showcased for the user to refer to when entering the new employees current role ID.
-
-![The following image showcases the table of available roles and their corresponding role IDs in order for the user to use as reference when inputting the new employee's role ID.](images\role-id_img.PNG)
 
 Once the user enters the corresponding role ID for the employee, the next series of questions will prompt requesting for the new employee's first name, last name, and their manager. Once completed the terminal will process the employee and will be added into the company directory.
 
-![The following image showcases the questions prompted for the add employee option](images\add-employee_img.PNG)
+![The following image showcases the questions prompted for the add employee option](images\new-employee-questions_img.PNG)
 
 ![The following image shows where the employee was added to the company directory](images\added-to-directory_img.PNG)
 
 Once completed, the user will then be prompted with the main menu again so that they can choose another option within the directory.
 
-### Update Employee Role
+### **Update Employee Role**
 
-If the user decides to update a current employee's role, they would choose 'Update Employee Role' in the main menu.
+If the user decides to update a current employee's role, they would choose 'Update Employee Role' in the main menu. By choosing 'Update Employee Role', the terminal will prompt the user to choose from a list of employees that's currently in the system to modify and then it will ask them to what role/position they need to be updated to.
 
-![The following image showcases the set of questions prompted in order to generate the engineer card for the directory](https://raw.githubusercontent.com/pazjenni04/employee-directory_generator/main/src/images/engineer-prompt_img.PNG)
+![The following image shows how the user can update an employee's role at the company](images\update-employee_img.PNG)
 
-Once again, when the user finishes answering all pertinent questions to generate the engineer role in the directory, they will again be prompted to choose one of the following positions to continue building the directory, an engineer, an intern, or choosing not to add any additional employees.
+Once the user enters the role they wish to update the employee to, they will then be presented with a table with the updated results. At this point, the user will be presented with the main menu to choose another option.
 
-If the user chooses "No more employees to add." then the user will then get their file generated with only the two cards they created, manager and engineer.
+### **View All Roles**
 
-### View All Roles
+To view all current roles being offered at the company, the user can choose the option 'View All Roles.' This will display all current positions being offered along with their role id, the title of the role, the salary assigned to that role and the department that role belongs to.
 
-If the user decides to continue by adding an intern to their directory, then by choosing "Intern" in the prompt "Please choose one of the following positions to continue building your directory" then they will then be prompted with all pertinent questions needed to generate an intern role.
+![The following images shows the view of all roles within the directory](images\all-roles_img.PNG)
 
-![The following showcases all the questions that the user is prompted with to create an intern card within the directory](https://raw.githubusercontent.com/pazjenni04/employee-directory_generator/main/src/images/intern-prompt_img.PNG)
+At this time, the user will be presented with the main menu again to choose another option.
 
-Once the user has finished answering all needed questions to generate the intern card they will be presented with the same prompt "Please choose one of the following positions to continue building your directory." At this point, the user can continue adding multiple engineers and/or interns as needed in order to complete their employee directory or to finish generating their file by choosing "No more employees to add." Once completed, the terminal will console log "Success!" and a new file will be generated with the department name they provided at the beginning of the application as the new file name.
+### **Add Role**
 
-![The following shows the final generated directory](https://raw.githubusercontent.com/pazjenni04/employee-directory_generator/main/src/images/generated-directory_img.PNG)
+On the main menu, if the user decides to add a role into the system they can choose 'Add Role.' Once they click enter, they will be presented with a current table of the current role's being offered at the company and will be prompted with a series of questions to build a new role. Questions that will be prompted includes the title of the new role, the salary for the new role, and the new department the role belongs to. Once complered, the system will generate the new role and it will be an option for any employees being entered into the directory.
 
-### Add Role
+![The following images showcases the questions prompted for the added role](images\add-role_img.PNG)
 
-### Delete Role
+After the user has completed their add-on, they will be presented with the main menu again.
 
-### View All Departments
+### **Delete Role**
 
-### Add Department
+If the user needs to delete a role within the directory, they can choose 'Delete Role'. This will then prompt a list of current roles available in the system in which the user can choose one and the system will proceed with removing it as an option.
 
-### Delete Role
+![The following image shows the prompts in order to delete an existing role](images\delete-role_img.PNG)
+
+Once the user has deleted their requested role, they will be presented with the main menu to choose another option.
+
+### **View All Departments**
+
+If the user needs to view all existing departments in the directory, they can choose 'View All Departments' on the main menu. Once they click enter, they will be presented with a table that shows all existing departments within the directory along with its corresponding id.
+
+![The following image shows the existing department table](images\all-departments_img.PNG)
+
+The user is then presented with the main menu again.
+
+### **Add Department**
+
+To add a department onto the directory, the user would choose 'Add Department' on the main menu. Once the user clicks on this option, they will be presented with a table of current existing deparments within the directory and prompted with a series of questions. In order to build a new department in the system, the user will have to input the new department's name and click enter. This will then create the new department within the system.
+
+![The following image shows the table that's prompted when needing to add a new department and the question the user would need to answer](images\new-department_img.PNG)
+
+Once completed, the user will be prompted to the main menu again to choose another option.
+
+### **Delete Department**
+
+To delete a department from the directory, the user can choose 'Delete Department' on the main menu. By choosing this option, the user will be presented with a table of existing departments and will be asked to choose a department to remove from the directory. Once the user chooses their department and clicks enter, the department will no longer exist in the system.
+
+![The following image shows the table presented when deleting a department](images\delete-department_img.PNG)
+
+After deleting the department, the user will be presented with the main menu again.
+
+### **Quit**
+
+In order for the user to stop running the system, they can choose 'Quit' on the main menu and it will exit the database.
 
 ## Technologies
 
 - Javascript
 - Node.js
-- CSS
+- MySQl2 package
 - Inquirer package
-- Jest package
+- Console-table package
 
 ## Questions
 
@@ -109,7 +135,6 @@ _Questions? Feel free to contact me._
 # Links
 
 To see a demonstration of this application, feel free to watch the following link.
-https://youtu.be/Rrb_llHudXo
 
 # License
 

@@ -86,10 +86,13 @@ function generateTask() {
 generateTask();
 
 function viewEmployees() {
-  db.query("SELECT * FROM employee", function (err, results) {
-    console.table(results);
-    generateTask();
-  });
+  db.query(
+    "SELECT employee.id, employee.first_name, employee.last_name, employee_role.title, employee_role.salary, department.department_name, CONCAT(manager.first_name,' ', manager.last_name) AS Manager FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id LEFT JOIN department on employee_role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;",
+    function (err, results) {
+      console.table(results);
+      generateTask();
+    }
+  );
 }
 
 //run prompts if choose add employee
@@ -174,10 +177,13 @@ function addedEmployeeInfo(employee) {
 
 //view all roles function
 function allRoles() {
-  db.query("SELECT * FROM employee_role", function (err, results) {
-    console.table(results);
-    generateTask();
-  });
+  db.query(
+    "SELECT employee_role.id, employee_role.title, employee_role.salary, department.department_name FROM employee_role LEFT JOIN department on employee_role.department_id = department.id;",
+    function (err, results) {
+      console.table(results);
+      generateTask();
+    }
+  );
 }
 
 //view all departments function

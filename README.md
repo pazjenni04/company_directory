@@ -83,9 +83,13 @@ Once the user has finished answering all needed questions to generate the intern
 
 ### Add Role
 
+### Delete Role
+
 ### View All Departments
 
 ### Add Department
+
+### Delete Role
 
 ## Technologies
 
